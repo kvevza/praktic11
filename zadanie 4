@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace xz
+{
+    internal class Player
+    {
+        public string Name { get; set; }
+        private int level;
+        private int health;
+
+        public int Level
+        {
+            get => level;
+            set => level = (value < 1) ? 1 : (value > 100) ? 100 : value;
+        }
+
+        public int Health
+        {
+            get => health;
+            set => health = (value < 0) ? 0 : (value > 100) ? 100 : value;
+        }
+
+        public bool IsAlive => Health > 0;
+
+        public Player(string name, int level, int health)
+        {
+            Name = name;
+            Level = level;
+            Health = health;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Health -= damage;
+            if (Health < 0) Health = 0;
+            Console.WriteLine($"Игрок: {Name}, уровень: {Level}, здоровье: {Health}, жив: {(IsAlive ? "да" : "нет")}");
+        }
+    }
+}
+internal class Program 
+{ 
+    static void Main(string[] args) 
+    { 
+        Player player = new Player("Alex", 5, 70); 
+        Console.WriteLine($"Игрок: {player.Name}, уровень: {player.Level}, здоровье: {player.Health}, жив: {(player.IsAlive ? "да" : "нет")}"); 
+        player.TakeDamage(30); 
+        player.TakeDamage(40); 
+        player.TakeDamage(10); 
+        player.Level = 0; 
+        Console.WriteLine($"Игрок: {player.Name}, уровень: {player.Level}, здоровье: {player.Health}, жив: {(player.IsAlive ? "да" : "нет")}"); 
+    } 
+}
